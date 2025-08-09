@@ -67,9 +67,6 @@ Answer: B
     )
 
     return response.choices[0].message.content.strip()
-
-
-
 load_pdf()
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
