@@ -69,7 +69,6 @@ Answer: B
     return response.choices[0].message.content.strip()
 
 
-#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
 
 load_pdf()
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
