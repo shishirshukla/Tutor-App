@@ -4,8 +4,6 @@ from typing import List
 from openai import OpenAI
 
 
-
-
 def extract_text_from_pdf(pdf_path: str) -> str:
     doc = fitz.open(pdf_path)
     text = ""
@@ -50,58 +48,124 @@ def openAI():
     print(response.choices[0].message.content.strip())
 
 
+def creat_chunks():
+  pdf_path = "sample1.pdf"  # Replace with your PDF file path
+  chunks = []
+  chunks = pdf_to_chunks(pdf_path, max_tokens=400, overlap=50)
+  print(type(chunks))
+  pdf_path = "sample2.pdf"  # Replace with your PDF file path
+  chunks.extend(pdf_to_chunks(pdf_path, max_tokens=400, overlap=50))
+  print(type(chunks))
+  pdf_path = "sample3.pdf"  # Replace with your PDF file path
+  chunks.extend(pdf_to_chunks(pdf_path, max_tokens=400, overlap=50))
+
+  for i, chunk in enumerate(chunks):
+    print(f"\n--- Chunk {i + 1} ---\n")
+    print(chunk)
+    
+  context = "\n\n".join(chunks)  # Limit to first few if too large
 
 
 # Example usage
 if __name__ == "__main__":
-    pdf_path = "sample1.pdf"  # Replace with your PDF file path
-    chunks = []
-    chunks = pdf_to_chunks(pdf_path, max_tokens=400, overlap=50)
-    print(type(chunks))
-    pdf_path = "sample2.pdf"  # Replace with your PDF file path
-    chunks.extend(pdf_to_chunks(pdf_path, max_tokens=400, overlap=50))
-    print(type(chunks))
-    pdf_path = "sample3.pdf"  # Replace with your PDF file path
-    chunks.extend(pdf_to_chunks(pdf_path, max_tokens=400, overlap=50))
-
-    for i, chunk in enumerate(chunks):
-        print(f"\n--- Chunk {i + 1} ---\n")
-        print(chunk)
     
-    context = "\n\n".join(chunks)  # Limit to first few if too large
     
     # 
     
     client = OpenAI(
         base_url="https://openrouter.ai/api/v1",
-        api_key="",
+        api_key="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",
     )
+    
+    ##IMG_20250809_202621211_HDR
+    ##IMG_20250809_202632510_HDR
+    ##IMG_20250809_202645259_HDR
+    ##IMG_20250809_202657148_HDR
+    ##IMG_20250809_202716542_HDR
+    ##IMG_20250809_202725313_HDR
+    ##IMG_20250809_202738913_HDR
+    ##IMG_20250809_202747308_HDR
+    ##IMG_20250809_202801072_HDR
+    ##IMG_20250809_202806824_HDR
+    ##IMG_20250809_202819011_HDR
 
-completion = client.chat.completions.create(
-  extra_headers={
-    "HTTP-Referer": "<YOUR_SITE_URL>", # Optional. Site URL for rankings on openrouter.ai.
-    "X-Title": "<YOUR_SITE_NAME>", # Optional. Site title for rankings on openrouter.ai.
-  },
-  extra_body={},
-  model="qwen/qwen2.5-vl-72b-instruct:free",
-  messages=[
-    {
-      "role": "user",
-      "content": [
-        {
-          "type": "text",
-          "text": "What is in this image?"
-        },
-        {
-          "type": "image_url",
-          "image_url": {
-            "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"
+    completion = client.chat.completions.create(
+        extra_headers={},
+        extra_body={},
+        model="qwen/qwen2.5-vl-72b-instruct:free",
+        messages=[
+          {
+            "role": "user",
+            "content": [
+              {
+                "type": "text",
+                "text": "Attached are images from Maths text book of class 3 , create a question paper with 15 questions"
+              },
+              {
+                "type": "image_url",
+                "image_url": {
+                  "url": "https://raw.githubusercontent.com/shishirshukla/Tutor-App/refs/heads/main/Photos-1-001/IMG_20250809_202621211_HDR.jpg?raw=true"
+                }
+              },
+              {
+                "type": "image_url",
+                "image_url": {
+                  "url": "https://raw.githubusercontent.com/shishirshukla/Tutor-App/refs/heads/main/Photos-1-001/IMG_20250809_202632510_HDR.jpg?raw=true"
+                }
+              },
+              {
+                "type": "image_url",
+                "image_url": {
+                  "url": "https://raw.githubusercontent.com/shishirshukla/Tutor-App/refs/heads/main/Photos-1-001/IMG_20250809_202645259_HDR.jpg?raw=true"
+                }
+              },
+              {
+                "type": "image_url",
+                "image_url": {
+                  "url": "https://raw.githubusercontent.com/shishirshukla/Tutor-App/refs/heads/main/Photos-1-001/IMG_20250809_202657148_HDR.jpg?raw=true"
+                }
+              },
+              {
+                "type": "image_url",
+                "image_url": {
+                  "url": "https://raw.githubusercontent.com/shishirshukla/Tutor-App/refs/heads/main/Photos-1-001/IMG_20250809_202716542_HDR.jpg?raw=true"
+                }
+              },
+              {
+                "type": "image_url",
+                "image_url": {
+                  "url": "https://raw.githubusercontent.com/shishirshukla/Tutor-App/refs/heads/main/Photos-1-001/IMG_20250809_202725313_HDR.jpg?raw=true"
+                }
+              },
+              {
+                "type": "image_url",
+                "image_url": {
+                  "url": "https://raw.githubusercontent.com/shishirshukla/Tutor-App/refs/heads/main/Photos-1-001/IMG_20250809_202747308_HDR.jpg?raw=true"
+                }
+              },
+              {
+                "type": "image_url",
+                "image_url": {
+                  "url": "https://raw.githubusercontent.com/shishirshukla/Tutor-App/refs/heads/main/Photos-1-001/IMG_20250809_202801072_HDR.jpg?raw=true"
+                }
+              },
+              {
+                "type": "image_url",
+                "image_url": {
+                  "url": "https://raw.githubusercontent.com/shishirshukla/Tutor-App/refs/heads/main/Photos-1-001/IMG_20250809_202806824_HDR.jpg?raw=true"
+                }
+              },
+              {
+                "type": "image_url",
+                "image_url": {
+                  "url": "https://raw.githubusercontent.com/shishirshukla/Tutor-App/refs/heads/main/Photos-1-001/IMG_20250809_202819011_HDR.jpg?raw=true"
+                }
+              }
+              
+            ]
           }
-        }
-      ]
-    }
-  ]
-)
+        ]
+      )
 print(completion.choices[0].message.content)
 
     
